@@ -1,0 +1,39 @@
+graph graphname {
+    X -- a;
+    X -- b;
+    X -- c;
+    X -- d;
+}
+
+2
+graph L {
+    X;
+}
+
+graph R {
+    Y -- a;
+    Y -- c;
+}
+
+a Y
+b c
+c Y
+d a
+X c
+Y Y
+
+graph L {
+    Y;
+}
+
+graph R {
+    X -- a;
+    X -- c;
+}
+
+a a
+b X
+c d
+d X
+X c
+Y Y
