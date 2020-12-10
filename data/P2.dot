@@ -1,7 +1,8 @@
-graph R {
-    r1 [label = "X"];
-    r2 [label = "b"];
-    r3 [label = "d"];
-    r1 -- r2;
-    r1 -- r3;
+graph RHS_2 {
+v1 -- v2;
+v2 -- v3;
+v3 -- v1;
+v1 [label="C"];
+v2 [label="B"];
+v3 [label="B"];
 }

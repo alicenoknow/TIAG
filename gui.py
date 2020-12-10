@@ -1,7 +1,8 @@
 import sys
 
-from PyQt5 import QtWidgets
-from PyQt5.QtGui import QPixmap
+from PyQt5 import QtWidgets, QtTest
+from PyQt5.QtCore import QTimer
+from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtWidgets import *
 
 import globals
@@ -13,9 +14,11 @@ from parsing import parse_input
 class MyWindow(QMainWindow):
     def __init__(self):
         super(MyWindow, self).__init__()
+
         self.legendtext = QLabel(self)
         self.legend = QtWidgets.QLabel(self)
         self.textbox = QLabel(self)
+        self.prodnumber = QLabel(self)
         self.comboProductions = QtWidgets.QComboBox(self)
         self.image = QtWidgets.QLabel(self)
         self.combolabel = QLabel(self)
@@ -23,11 +26,10 @@ class MyWindow(QMainWindow):
         self.input = QLineEdit(self)
         self.inputbutton = QPushButton(self)
         self.initUI()
-        self.showMaximized()
 
     def initUI(self):
 
-        self.setGeometry(500, 500, 800, 600)
+        self.setGeometry(100, 50, 900, 600)
         self.setWindowTitle("Transformacje grafowe")
 
         # Drawing and displaying initial graph
@@ -58,6 +60,12 @@ class MyWindow(QMainWindow):
         self.combolabel.resize(150, 20)
         self.combolabel.setText("Wybierz produkcję z listy ")
 
+        # Text with current production number
+        self.prodnumber.move(50, 10)
+        self.prodnumber.resize(330, 30)
+        self.prodnumber.setText("")
+        self.prodnumber.setFont(QFont('Arial', 17))
+
         # Text label for input
         self.inputlabel.move(50, 440)
         self.inputlabel.resize(150, 80)
@@ -85,31 +93,37 @@ class MyWindow(QMainWindow):
     def onActivatedComboBox(self, text):
         for s in text.split():
             if s.isdigit():
-                self.display_productions([int(s)])
+                self.display_production(int(s))
 
     # Attempt to perform and display productions and statistics
-    def display_productions(self, prod_nr):
-        for i in prod_nr:
-            if i < 1 or i > globals.N:
-                self.textbox.setText(
-                    "Produkcja {} nie może być zrealizowana. \n\n  Produkcja nie istnieje".format(i))
-                continue
-            newG = production.production(i)
-            if newG is not None:
-                globals.G = newG
-                self.image.setPixmap(QPixmap("G1.png"))
-                self.textbox.setText(statistics.get_stats(globals.G))
-            else:
-                self.textbox.setText(
-                    "Produkcja {} nie może być zrealizowana. \n\n  W grafie początkowym nie znaleziono "
-                    "wierzchołka\n  lewej strony produkcji".format(i))
+    def display_production(self, i):
+        if i < 1 or i > globals.N:
+            self.textbox.setText(
+                "Produkcja {} nie może być zrealizowana. \n\n  Produkcja nie istnieje".format(i))
+            self.prodnumber.setText("Produkcja {} nieudana".format(i))
+            return
+        newG = production.production(i)
+        if newG is not None:
+            globals.G = newG
+            self.image.setPixmap(QPixmap("G1.png"))
+            self.textbox.setText(statistics.get_stats(globals.G))
+            self.prodnumber.setText("Produkcja {} ".format(i))
+        else:
+            self.textbox.setText(
+                "Produkcja {} nie może być zrealizowana. \n\n  W grafie początkowym nie znaleziono "
+                "wierzchołka\n  lewej strony produkcji".format(i))
+            self.prodnumber.setText("Produkcja {} nieudana".format(i))
+
 
     # Parsing input and performing productions
     def onActivatedInput(self):
         input = self.input.text()
         prod_nr = parse_input(input)
         if prod_nr:
-            self.display_productions(prod_nr)
+            for i in prod_nr:
+                self.display_production(i)
+                QtTest.QTest.qWait(1000)
+
         else:
             self.textbox.setText(
                 "Produkcja nie może być zrealizowana. \n\n Błędne dane wejściowe.")

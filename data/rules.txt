@@ -1,28 +1,84 @@
-a Y
-b c
-c Y
-d a
-X c
-Y Y
+A A
+B *
+C *
+a A
+b *
+c *
 
+A *
+B B
+C C
+a *
+b B
+c C
+
+A A
+B B
+C C
+a A
+b B
+c C
+
+A *
+B a
+C a
+a *
+b a
+c a
+
+A b
+B *
+C b
 a b
-b X
-c d
-d X
-X b
-Y X
+b *
+c b
 
-a X
-b Y
-c X
-d Y
-X X
-Y Y
-
+A c
+B c
+C *
 a c
 b c
-c c
-d c
-X c
-Y c
+c *
+
+A B
+B A
+C *
+a B
+b A
+c *
+
+A C
+B *
+C A
+a C
+b *
+c A
+
+A B
+B A
+C *
+a B
+b A
+c *
+
+A *
+B C
+C B
+a *
+b C
+c B
+
+A C
+B *
+C A
+a C
+b *
+c A
+
+A *
+B C
+C B
+a *
+b C
+c B
 

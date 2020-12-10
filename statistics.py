@@ -62,7 +62,7 @@ def get_stats(G):
     avg_deg_all = avg_degree_all(G)
     avg_deg_T = avg_degree_terminal(G)
     stats = "  Liczba wierzchołków: {} \n  Liczba krawędzi: {}\n  Liczba spójnych składowych: {}\n  Średni stopień " \
-            "wierzchołków: {}\n  Średni stopień wierzchołków terminalnych: {}\n  Średnia liczba wierzchołków w " \
+            "wierzchołków: {}\n  Średni stopień wierzchołków terminalnych: {}\n  Średni stopień wierzchołków w " \
             "spójnych składowych: {}".format(
              nodes, edges, con_comp, avg_deg_all, avg_deg_T, (avg_deg_all / con_comp))
     return stats
